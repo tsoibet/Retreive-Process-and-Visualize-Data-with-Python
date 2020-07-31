@@ -1,8 +1,8 @@
-import sqlite3
 import urllib.request
 import urllib.error
-import re
 import ssl
+import sqlite3
+
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
