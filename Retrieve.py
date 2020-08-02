@@ -43,3 +43,4 @@ except Exception as e:
     print("Unable to retrieve data...")
     print("Error message: ", e)
 conn.commit()
+cur.close()
