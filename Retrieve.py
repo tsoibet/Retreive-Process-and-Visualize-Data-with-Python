@@ -25,6 +25,9 @@ try:
     csvdata = csv.reader(io.StringIO(initial_value=text))
     count = 0
     for row in csvdata:
+        if count == 0:
+            count = count+1
+            continue
         print(row)
         ward = row[0]
         building = row[1]
@@ -35,7 +38,7 @@ try:
         cur.execute('''INSERT OR IGNORE INTO WaterStation (ward, building, address, location, charge, drinktype)
                        VALUES (?, ?, ?, ?, ?, ?)''', (ward, building, address, location, charge, drinktype))
         count = count+1
-    print(count, "records.")
+    print(count-1, "records.")
     conn.commit()
 except KeyboardInterrupt:
     print("\nProgram interrupted by user...")
