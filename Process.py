@@ -19,6 +19,7 @@ raw_conn = sqlite3.connect("rawdata.sqlite")
 raw_cur = raw_conn.cursor()
 
 raw_cur.execute('''SELECT ward, address, building, charge FROM WaterStation''')
+count = 0
 for row in raw_cur:
     # Fill in table 'Wards' and get ward ID
     ward_name = row[0].strip()
@@ -52,6 +53,14 @@ for row in raw_cur:
     # Fill in all cleaned up data in table 'WaterStations'
     cur.execute('''INSERT OR IGNORE INTO WaterStations (ward_id, full_address, charge_id) 
     VALUES (?, ?, ?)''', (ward_id, full_address, charge_id))
+    conn.commit()
+    count = count + 1
 
+raw_conn.close()
 
-conn.commit()
+cur.execute('''SELECT Wards.name, WaterStations.full_address, Charge.charge FROM WaterStations JOIN Wards JOIN Charge ON WaterStations.ward_id = Wards.id and WaterStations.charge_id = Charge.id''')
+for row in cur:
+    print(row)
+print(count, "records.")
+
+conn.close()
