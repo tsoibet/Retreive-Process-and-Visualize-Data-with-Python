@@ -1,2 +1,3 @@
 *.sqlite
-ds_store
+.DS_store
+Barchart.js
