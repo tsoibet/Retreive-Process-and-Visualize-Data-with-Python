@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css"
+    rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+  <script src="Map.js" charset="utf-8"></script>
+  <style>
+    #WSmap {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    function initialize() {
+      var mapcenter = new google.maps.LatLng(35.658581, 139.745433)
+      var mapOptions = {
+        zoom: 14,
+        center: mapcenter,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      var map = new google.maps.Map(document.getElementById('WSmap'), mapOptions);
+
+      i = 0;
+      var markers = [];
+      for (pos in mapdata) {
+        i = i + 1;
+        var row = mapdata[pos];
+        window.console && console.log(row);
+        var newLatlng = new google.maps.LatLng(row[0], row[1]);
+        var marker = new google.maps.Marker({
+          position: newLatlng,
+          map: map,
+          title: row[2]
+        });
+        markers.push(marker);
+        /* New options for MarkerClusterer function to display markers */
+        var options = {
+          imagePath: 'http://rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+        }
+      }
+      /* Marker Clustering */
+      var markerCluster = new MarkerClusterer(map, markers, options);
+    }
+  </script>
+</head>
+
+<body onload="initialize()">
+  <h3>Data Visualization: Map</h3>
+  <div id="WSmap"></div>
+</body>
+
+</html>
